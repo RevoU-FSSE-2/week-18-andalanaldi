@@ -21,7 +21,6 @@ const { JWT_SIGN } = require('../config/jwt.js')
 //         }
 //     }
 // }
-
 const authorizationMiddleware = ({ roles }) => (req, res, next) => { // roles - array of string
   if (!roles.includes(req.role)) { //includes is to check whether roles element have re.role, ! is reversed, ex roles contatains user and admin and req.role = admin
     return res.status(401).json({ message: "Unauthorized" });
