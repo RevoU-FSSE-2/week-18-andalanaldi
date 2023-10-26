@@ -15,6 +15,7 @@ const authenticationMiddleware = (req, res, next) => {
         const decodedToken = jwt.verify(token, JWT_SIGN)
         console.log(decodedToken, 'decodedToken');
         req.role = decodedToken.role
+        req.id = decodedToken.id
         next()
     } catch (error) {
         res.status(400).json({ error: error.message })

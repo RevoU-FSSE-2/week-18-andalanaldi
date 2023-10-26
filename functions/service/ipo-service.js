@@ -1,8 +1,15 @@
 
 const getAllIpoToDo = async (req, res) => {
   try {
+      const filter = {}
+      if (req.role=="broker") {
+        filter = {isDeleted: false, brokerId: req.id} 
+      } else {
+        filter = {isDeleted: false}
+      }
+
       const ipoCollection = req.db.collection('ipo-todow18');
-      const ipo = await ipoCollection.find().toArray();
+      const ipo = await ipoCollection.find(filter).toArray();
 
       res.status(200).json({
           message: 'To Do List of IPO Order Preperations successfully retrieved',
@@ -24,7 +31,9 @@ const createIpoToDo = async (req, res) => {
           outstanding, 
           ipovalue, 
           underwriter,
-          status } = req.body;
+          status, 
+          priority, 
+          deadline, } = req.body;
 
   console.log(
     username, 
@@ -37,7 +46,9 @@ const createIpoToDo = async (req, res) => {
     outstanding, 
     ipovalue, 
     underwriter,
-    status, '<=== ipo todo ===>');
+    status,
+    priority, 
+    deadline, '<=== ipo todo ===>');
 
   try {
       const ipoCollection = req.db.collection('ipo-todow18');
@@ -52,7 +63,9 @@ const createIpoToDo = async (req, res) => {
         outstanding, 
         totalipo, 
         underwriter,
-        status });
+        status,          
+        priority, 
+        deadline, });
 
       res.status(200).json({
           message: 'To Do List of IPO Order Preperations successfully created',

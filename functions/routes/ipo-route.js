@@ -1,11 +1,11 @@
 const { Router } = require('express')
-const { getAllTrans, createTrans, approvalTrans } = require('../service/ipo-service.js')
+const { getAllIpoToDo, createIpoToDo, approvalIpo } = require('../service/ipo-service.js')
 const authorizationMiddleware = require('../middleware/authorization-middleware.js')
 
 const ipoRouter = Router()
 
-ipoRouter.get('/', getAllTrans)
-ipoRouter.post('/', createTrans)
-ipoRouter.put('/:id', authorizationMiddleware, approvalTrans)
+ipoRouter.get('/', authorizationMiddleware({ roles: ["broker"]}), getAllIpoToDo)
+ipoRouter.post('/', authorizationMiddleware({ roles: ["client"]}), createIpoToDo)
+ipoRouter.put('/:id', authorizationMiddleware({ roles: ["broker"]}), approvalIpo)
 
 module.exports = ipoRouter
