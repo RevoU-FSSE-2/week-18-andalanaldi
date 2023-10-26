@@ -7,10 +7,17 @@ const getAllIpoToDo = async (req, res) => {
       } else {
         filter = {isDeleted: false}
       }
-
       const ipoCollection = req.db.collection('ipo-todow18');
       const ipo = await ipoCollection.find(filter).toArray();
-
+      let ipou = {}
+      if (req.role === 'client') {
+        ipou = await req.db
+          .collection('ipo-todow18')
+          .find({username: req.id})
+          .toArray();
+      } else {
+        ipou = await req.db.collection('ipo-todow18').find().toArray();
+      }
       res.status(200).json({
           message: 'To Do List of IPO Order Preperations successfully retrieved',
           data: ipo,
@@ -76,6 +83,34 @@ const createIpoToDo = async (req, res) => {
   }
 };
 
+const updateIpoToDo = async (req, res) => {
+  const id = req.params.id 
+  const { username, code } = req.body;
+
+  try {
+      const ipoCollection = req.db.collection('ipo-todow18');
+      const updateIpo = await ipoCollection.findOne({ _id: id })
+      if (!updateIpo) {
+        res.status(400).json({ error: "Not Found" });
+        return
+      }
+
+      if (req.role==='client' && updateIpo.username != req.id) {
+        res.status(403).json({ error: "Forbidden Access" });
+        return
+      }
+
+      console.log(username, code, `<=== IPO todo ===>`)
+
+      res.status(200).json({
+          message: 'To Do List of IPO Order Preperations update successfully created',
+          data: updateIpo,
+      });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+};
+
 const approvalIpo = async (req, res) => {
   const { id, status } = req.body;
 
@@ -106,5 +141,6 @@ const approvalIpo = async (req, res) => {
 module.exports = {
   getAllIpoToDo,
   createIpoToDo,
+  updateIpoToDo,
   approvalIpo,
 };

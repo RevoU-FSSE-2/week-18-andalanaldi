@@ -4,6 +4,14 @@ const { JWT_SIGN } = require('../config/jwt.js')
 
 // Modify register function to enforce role, non-blank username, and password requirements
 const register = async (req, res) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    res.status(400).send({ error: result.array() });
+    return
+  }
+  
+  res.send({ errors: result.array() });
+
   const { username, password, role } = req.body
 
   try {
