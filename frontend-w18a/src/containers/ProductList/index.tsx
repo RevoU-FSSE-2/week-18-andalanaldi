@@ -89,24 +89,34 @@ const ProductList = () => {
             key: '_id',
         },
         {
-            title: 'Username',
-            dataIndex: 'username',
-            key: 'username', 
+            title: 'Client ID',
+            dataIndex: 'clientid',
+            key: 'clientid', 
         },
         {
-            title: 'Transfer',
-            dataIndex: 'transfer',
-            key: 'transfer', 
+            title: 'Ticker Code',
+            dataIndex: 'tickercode',
+            key: 'tickercode', 
         },
         {
-            title: 'Nominal',
-            dataIndex: 'nominal',
-            key: 'nominal', 
+            title: 'Outstanding Stock',
+            dataIndex: 'outstanding',
+            key: 'outstanding', 
+        },
+        {
+            title: 'Priority',
+            dataIndex: 'priority',
+            key: 'priority', 
         },
         {
             title: 'Status',
             dataIndex: 'status',
             key: 'status', 
+        },
+        {
+            title: 'Deadline',
+            dataIndex: 'deadline',
+            key: 'deadline', 
         },
         {
             title: 'Action',
