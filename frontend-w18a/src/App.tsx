@@ -1,9 +1,9 @@
 import AppProvider from './Provider/AppProvider'
 // import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Home, Product, Profile, ProductDetail, Login, Regis } from './pages'
+import { Home, Product, Profile, ProductDetail, ProductEdit, ProductNew, BrokerApproval, Login, Regis } from './pages'
 import { PublicLayout, AnotherLayout } from './layouts'
-// ProductEdit, ProductNew,
+ 
 function App() {
 
   const router = createBrowserRouter([
@@ -22,14 +22,18 @@ function App() {
           path: '/product/:id',
           element: <ProductDetail />
         },
-        // {
-        //   path: '/product/new',
-        //   element: <ProductNew />
-        // },
-        // {
-        //   path: '/product/edit/:id',
-        //   element: <ProductEdit />
-        // },
+        {
+          path: '/product/new',
+          element: <ProductNew />
+        },
+        {
+          path: '/product/edit/:id',
+          element: <ProductEdit />
+        },
+        {
+          path: '/product/approval/:id',
+          element: <BrokerApproval />
+        },
         {
           path: '/profile',
           element: <Profile />
@@ -53,7 +57,7 @@ function App() {
   ])
 
   return (
-    // cara lama tapi masih di pakai
+    // old but gold (it is utilized until recently)
     // <BrowserRouter>
     //   <AppProvider>
     //     <Routes>

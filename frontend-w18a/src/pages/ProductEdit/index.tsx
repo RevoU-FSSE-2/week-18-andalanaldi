@@ -1,10 +1,10 @@
-// import { ProductEdit as ProductEditContainer } from '../../containers';
+import { ProductEdit as ProductEditContainer } from '../../containers';
 
-// const ProductEdit = () => {
+const ProductEdit = () => {
 
-//     return (
-//         <ProductEditContainer />
-//     )
-// }
+    return (
+        <ProductEditContainer />
+    )
+}
 
-// export default ProductEdit
+export default ProductEdit

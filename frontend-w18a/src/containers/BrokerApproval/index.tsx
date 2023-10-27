@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { headers } from '../../types';
 import { BASE_URL } from '../../config/config';
 
-const ProductEdit = () => {
+const BrokerApproval = () => {
 
     const navigate = useNavigate();
     const [category, setCategory] = useState<Category>()
@@ -34,9 +34,10 @@ const ProductEdit = () => {
     )
 
     const onSubmit = async (values: CategoryFormProps) => {
+
         try {
 
-            const productEdit: Category = {
+            const brokerApproval: Category = {
                 _id : id,
                 clientid : values.clientid,
                 tickercode: values.tickercode,
@@ -46,7 +47,7 @@ const ProductEdit = () => {
                 priority: values.priority,
                 deadline: values.deadline
             }
-            const fetching = await fetch(`${BASE_URL}/ipo/update/${id}`, {
+            const fetching = await fetch(`${BASE_URL}/ipo/approval/${id}`, {
                 method: 'PUT',
                 headers: 
                 { 
@@ -55,7 +56,7 @@ const ProductEdit = () => {
                     // 'authToken'
                 },
                 body: JSON.stringify(
-                    productEdit
+                    brokerApproval
                 ),
             })
             // await fetching.json()
@@ -67,7 +68,6 @@ const ProductEdit = () => {
         } catch (error) {
             alert(error)
         }
-
     }
 
     if(category) {
@@ -77,4 +77,4 @@ const ProductEdit = () => {
     return null
 }
 
-export default ProductEdit
+export default BrokerApproval

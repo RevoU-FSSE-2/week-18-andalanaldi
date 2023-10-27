@@ -4,10 +4,10 @@ const authorizationMiddleware = require('../middleware/authorization-middleware.
 
 const ipoRouter = Router()
 
-ipoRouter.get('/', authorizationMiddleware({ roles: ["broker"]}), getAllIpoToDo)
-ipoRouter.post('/', authorizationMiddleware({ roles: ["client"]}), createIpoToDo)
-ipoRouter.put('/:id', authorizationMiddleware({ roles: ["client"]}), updateIpoToDo)
-ipoRouter.delete('/:id', authorizationMiddleware({ roles: ["client"]}), deleteIpoToDo)
-ipoRouter.put('/:id', authorizationMiddleware({ roles: ["broker"]}), approvalIpo)
+ipoRouter.get('/', authorizationMiddleware({ roles: ["broker", "client"]}), getAllIpoToDo)
+ipoRouter.post('/new', authorizationMiddleware({ roles: ["client"]}), createIpoToDo)
+ipoRouter.put('/update/:id', authorizationMiddleware({ roles: ["client"]}), updateIpoToDo)
+ipoRouter.delete('/delete/:id', authorizationMiddleware({ roles: ["client"]}), deleteIpoToDo)
+ipoRouter.put('/approval/:id', authorizationMiddleware({ roles: ["broker"]}), approvalIpo)
 
 module.exports = ipoRouter

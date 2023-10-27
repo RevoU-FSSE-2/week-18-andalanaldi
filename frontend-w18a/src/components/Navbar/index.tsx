@@ -8,11 +8,11 @@ const items: MenuProps['items'] = [
         key: '/'
     },
     {
-        label: 'Product',
+        label: 'ToDoList',
         key: '/product'
     },
     {
-        label: 'Profile',
+        label: 'ClientProfile',
         key: '/profile'
     },
     {

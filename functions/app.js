@@ -5,15 +5,13 @@ const databaseMiddleware = require('./middleware/database-middleware.js')
 const authRouter = require('./routes/auth-route.js')
 const ipoRouter = require('./routes/ipo-route.js')
 const authMiddleware = require('./middleware/authentication-middleware.js')
-
+const cors = require('cors');
 const Validator = require('express-validator');
-//OpenApi
-// -openapi ga usah masuknya middleware n service controller, masuk body n custom message
-// saldo nanti dulu aja
-const app = express()
-// due dates sampe jam 9, to do list status dan penugasan simple, lewat due dates ga bisa update, ga bisa ubah status
-app.use(express.json())
 
+const app = express()
+
+app.use(express.json())
+app.use(cors())
 app.use(databaseMiddleware)
 
 app.get('/', (req, res) => {

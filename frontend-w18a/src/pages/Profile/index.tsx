@@ -2,7 +2,7 @@
 const Profile = () => {
 
     return (
-        <h1>Profile Page</h1>
+        <h1>Client Profile Page</h1>
     )
 }
 

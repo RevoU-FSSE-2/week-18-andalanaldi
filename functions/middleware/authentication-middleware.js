@@ -16,6 +16,7 @@ const authenticationMiddleware = (req, res, next) => {
         console.log(decodedToken, 'decodedToken');
         req.role = decodedToken.role
         req.id = decodedToken.id
+        console.log('req.id:', req.id, 'req.role:', req.role)
         next()
     } catch (error) {
         res.status(400).json({ error: error.message })

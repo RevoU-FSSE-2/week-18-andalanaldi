@@ -1,10 +1,10 @@
-// import { ProductNew as ProductNewContainer } from '../../containers';
+import { ProductNew as ProductNewContainer } from '../../containers';
 
-// const ProductNew = () => {
+const ProductNew = () => {
 
-//     return (
-//         <ProductNewContainer />
-//     )
-// }
+    return (
+        <ProductNewContainer />
+    )
+}
 
-// export default ProductNew
+export default ProductNew

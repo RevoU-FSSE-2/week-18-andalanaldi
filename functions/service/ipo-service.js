@@ -1,16 +1,12 @@
 const { body, validationResult } = require('express-validator');
+const { ObjectId } = require('mongodb');
 
 const getAllIpoToDo = async (req, res) => {
   try {
-      // const filter = {}
-      // if (req.role=="broker") {
-      //   filter = {isDeleted: false, brokerId: req.id} 
-      // } else {
-      //   filter = {isDeleted: false}
-      // }
-      // const ipoCollection = req.db.collection('ipo-todow18');
-      // const ipo = await ipoCollection.find(filter).toArray();
-      let ipo = {}
+      let ipo = []
+      //{}
+      console.log('req.role:', req.role) 
+      console.log('req.id:', req.id)
       if (req.role === 'client') {
         ipo = await req.db
           .collection('ipo-todow18')
@@ -19,6 +15,8 @@ const getAllIpoToDo = async (req, res) => {
       } else {
         ipo = await req.db.collection('ipo-todow18').find().toArray();
       }
+
+      console.log('ipo:', ipo);
       res.status(200).json({
           message: 'To Do List of IPO Order Preperations successfully retrieved',
           data: ipo,
@@ -127,20 +125,6 @@ const updateIpoToDo = async (req, res) => {
       .isNumeric()
       .withMessage('Priority must be a number')
       .run(req),
-    body('deadline')
-      .optional()
-      .isISO8601()
-      .withMessage('Deadline must be a valid date in ISO8601 format')
-      .custom((value) => {
-        // Custom validation to check if the deadline is in the future
-        const currentDate = new Date();
-        const deadlineDate = new Date(value);
-        if (deadlineDate <= currentDate) {
-          throw new Error('Deadline must be in the future');
-        }
-        return true;
-      })
-      .run(req),
   ]);
 
   const result = validationResult(req);
@@ -150,13 +134,14 @@ const updateIpoToDo = async (req, res) => {
   }
 
   const id = req.params.id 
-  const { tickercode, purpose, outstanding, priority, deadline } = req.body;
+  console.log('ID:', id); 
+  const { tickercode, purpose, outstanding, priority } = req.body;
 
   try {
       const ipoCollection = req.db.collection('ipo-todow18');
-      const findIpoId = await ipoCollection.findOne({ _id: id })
+      const findIpoId = await ipoCollection.findOne({ _id: new ObjectId(id) })
       if (!findIpoId) {
-        res.status(400).json({ error: "Not Found" });
+        res.status(404).json({ error: "IPO ToDoList Record Not Found" });
         return
       }
 
@@ -165,8 +150,8 @@ const updateIpoToDo = async (req, res) => {
         return
       }
         const updatedIpou = await ipoCollection.updateOne(
-            { _id: ObjectId(id) }, // MongoDB's default ObjectId is used as assumed
-            { $set: { tickercode, purpose, outstanding, priority, deadline } }
+            { _id: new ObjectId(id) }, // MongoDB's default ObjectId is used as assumed replaced by Match the record by _id
+            { $set: { tickercode, purpose, outstanding, priority } }
         );
   
         if (updatedIpou.matchedCount === 0) {
@@ -175,7 +160,7 @@ const updateIpoToDo = async (req, res) => {
             return;
         }
 
-      console.log( code, `<=== IPO todo ===>`)
+      console.log( id, `<=== IPO todo ===>`)
 
       res.status(200).json({
           message: 'To Do List of IPO Order Preperations update successfully created',
@@ -192,18 +177,18 @@ const deleteIpoToDo = async (req, res) => {
 
   try {
       const ipoCollection = req.db.collection('ipo-todow18');
-      const findIpoId = await ipoCollection.findOne({ _id: id })
+      const findIpoId = await ipoCollection.findOne({ _id: new ObjectId(id) })
       if (!findIpoId) {
-        res.status(400).json({ error: "Not Found" });
+        res.status(404).json({ error: "To Do List of IPO Order Preparations not found" });
         return
       }
 
-      if (req.role==='client' && findIpoId.clientid != req.id) {
+      if (req.role ==='client' && findIpoId.clientid != req.id) {
         res.status(403).json({ error: "Forbidden Access" });
         return
       }
         const deletedIpou = await ipoCollection.deleteOne(
-            { _id: id }, // MongoDB's default ObjectId is used as assumed
+            { _id: new ObjectId(id) }, // MongoDB's default ObjectId is used as assumed
             // { $pull: { code } }
         );
   
@@ -238,15 +223,15 @@ const approvalIpo = async (req, res) => {
     res.status(400).send({ error: result.array() });
     return;
   }
-  
-  const { id, status } = req.body;
+  const id = req.params.id
+  const {  status } = req.body;
 
   console.log(id, status, '<=== ipo todo ===>');
 
   try {
       const ipoCollection = req.db.collection('ipo-todow18');
       const updatedIpo = await ipoCollection.updateOne(
-          { _id: ObjectId(id) }, // MongoDB's default ObjectId is used as assumed
+          { _id: new ObjectId(id) }, // MongoDB's default ObjectId is used as assumed
           { $set: { status } }
       );
 
@@ -257,7 +242,7 @@ const approvalIpo = async (req, res) => {
       }
 
       res.status(200).json({
-          message: 'To Do List of IPO Order Preperations status successfully approved',
+          message: 'To Do List of IPO Order Preperations status successfully approved or rejected',
           data: updatedIpo,
       });
   } catch (error) {

@@ -2,7 +2,8 @@ import * as yup from 'yup'
 
 export const initialValues = {
     username: '',
-    password: ''
+    password: '',
+    role: ''
 }
 
 export const validationSchema = yup.object({
@@ -10,7 +11,8 @@ export const validationSchema = yup.object({
     password: yup.string()
                  .required()
                  .min(8, 'Password is too short - should be 8 characters at least.')
-                 .matches(/^(?=.*\d)(?=.*[a-zA-Z]).+$/, 'Password can only contain latin letters & numbers.')
+                 .matches(/^(?=.*\d)(?=.*[a-zA-Z]).+$/, 'Password can only contain latin letters & numbers.'),
+    role: yup.string().required(),
 })  
 
 // export const initialValues = {

@@ -1,5 +1,6 @@
 import { ColumnsType } from 'antd/es/table';
-import { useEffect, useState, useRef  } from 'react';
+import { useEffect, useState  } from 'react';
+//useRef
 import { ProductList as ProductListComponent } from '../../components'
 import { headers, GetCategoryResponse, Category } from '../../types';
 import { Button } from 'antd'
@@ -30,12 +31,12 @@ const ProductList = () => {
 
 
     // Create a ref for handleNavigate
-    const handleNavigateRef = useRef<(path: string) => void>((path: string) => {
-        navigate(path);
-    });
+    // const handleNavigateRef = useRef<(path: string) => void>((path: string) => {
+    //     navigate(path);
+    // });
 
     // Extract the function from the ref
-    const handleNavigate = handleNavigateRef.current;
+    // const handleNavigate = handleNavigateRef.current;
 
     useEffect(
         () => {
@@ -44,43 +45,43 @@ const ProductList = () => {
         []
     )
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const token = localStorage.getItem('authToken');
-        if(!token) {
-            handleNavigate('/Product'); 
-            return;
+        // const token = localStorage.getItem('authToken');
+        // if(!token) {
+        //     handleNavigate('/Product'); 
+        //     return;
+        // }
+        //     getCategoryList();
+        // }, [handleNavigate]);
+
+    const removeProduct = async (id: string | undefined) => {
+        try {
+            const token = localStorage.getItem('token');
+            console.log("token:", token);
+            const fetching = await fetch(`${BASE_URL}/ipo/delete/${id}`, {
+                method: 'DELETE',
+                headers: { 
+                //     'Content-Type': 'application/json', 
+                    Authorization: `Bearer ${token}`
+                //     // 'authToken'
+                // 34506582-54ef-4997-ad9b-1d05b716023c
+                },
+            })
+
+            // const response = await fetching.json()
+
+            if(fetching.ok) {
+                //cara pertama panggil api lagi
+                // getProductList()
+
+                //cara kedua
+                setCategories((categories) => categories.filter((category) => category._id !== id))
+            }
+        } catch (error) {
+            alert(error)
         }
-            getCategoryList();
-        }, [handleNavigate]);
-
-    // const removeProduct = async (id: string | undefined) => {
-    //     try {
-    //         const token = localStorage.getItem('token');
-    //         console.log("token:", token);
-    //         const fetching = await fetch(`https://mock-api.arikmpt.com/api/category/${id}`, {
-    //             method: 'DELETE',
-    //             headers: { 
-    //             //     'Content-Type': 'application/json', 
-    //                 Authorization: `Bearer ${token}`
-    //             //     // 'authToken'
-    //             // 34506582-54ef-4997-ad9b-1d05b716023c
-    //             },
-    //         })
-
-    //         // const response = await fetching.json()
-
-    //         if(fetching.ok) {
-    //             //cara pertama panggil api lagi
-    //             // getProductList()
-
-    //             //cara kedua
-    //             setCategories((categories) => categories.filter((category) => category.id !== id))
-    //         }
-    //     } catch (error) {
-    //         alert(error)
-    //     }
-    // }
+    }
 
     const columns: ColumnsType<Category> = [
         {
@@ -124,8 +125,9 @@ const ProductList = () => {
             render: (_, record) => (
               <>
                 <Button type={'default'} onClick={() => navigate(`/product/${record._id}`)}>Detail</Button>
-                <Button type={'primary'} onClick={() => navigate(`/product/edit/${record._id}`)}>Edit</Button>
-                {/* <Button type={'primary'} color={'red'} onClick={() => removeProduct(record.id)} style={{ marginLeft: "0.3rem" }}>Delete</Button> */}
+                <Button type={'primary'} onClick={() => navigate(`/product/edit/${record._id}`)}>Update</Button>
+                <Button type={'primary'} onClick={() => navigate(`/product/approval/${record._id}`)}>Approval/BrokerOnly</Button>
+                <Button type={'primary'} color={'red'} onClick={() => removeProduct(record._id)} style={{ marginLeft: "0.3rem" }}>Delete</Button>
               </>
             ),
         },
@@ -134,7 +136,7 @@ const ProductList = () => {
     return (
         <>
             <h3>Product List</h3>
-            <Button type={'primary'} onClick={() => navigate('/product/new')}>Add New Product</Button>
+            <Button type={'primary'} onClick={() => navigate('/product/new')}>Add New ToDoList</Button>
             <ProductListComponent columns={columns} data={categories}/>
         </>
     )

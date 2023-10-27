@@ -35,6 +35,7 @@ export interface LoginResponse {
 export interface RegisForm {
     username: string;
     password: string;
+    role: string;
 }
 
 export interface RegisResponse {
@@ -66,13 +67,16 @@ export interface GetCategoryResponse {
     message: string;
     data: Category[];
 }
-
+// status, priority, deadline 
 export interface Category {
     _id: string | undefined;
-    username: string;
-    transfer: string;
-    nominal: number;
+    clientid: string;
+    tickercode: string;
+    purpose: string;
+    outstanding: number | undefined;
     status: string
+    priority: number | undefined;
+    deadline: string;
 }
 
 // export interface RegisForm {

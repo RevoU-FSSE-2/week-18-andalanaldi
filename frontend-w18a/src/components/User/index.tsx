@@ -1,6 +1,7 @@
 import { AppContext } from "../../Provider/AppProvider"
 import { useCallback, useContext } from "react"
 import { useEffect } from 'react';
+import { BASE_URL } from '../../config/config';
 
 const User = () => {
     const { user, setUser} = useContext(AppContext);
@@ -8,7 +9,8 @@ const User = () => {
     
     const fetchUser = useCallback(
         async () => {
-            const fetching = await fetch('https://dummyjson.com/users/1')
+            const fetching = await fetch(`${BASE_URL}/ipo`)
+            //'https://dummyjson.com/users/1'
             const response = await fetching.json()
             setUser?.(response)
         },

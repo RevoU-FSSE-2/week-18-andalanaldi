@@ -5,7 +5,7 @@ const ProductDetail = () => {
 
     return (
         <div>
-            This is detail of product page with id: {params?.id}
+            This is product detail of IPO Preparations ToDoList Web App page with id: {params?.id}
         </div>
     )
 }

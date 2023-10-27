@@ -33,17 +33,6 @@ const RegisForm = ({ onSubmit } : Props) => {
                         <Typography.Paragraph>{formMik.errors.username}</Typography.Paragraph>
                     )}
                 </div>
-                {/* <div>
-                    <Typography.Paragraph>{'Email'}</Typography.Paragraph>
-                    <Input name={'email'}
-                        value={formMik.values.email} 
-                        onChange={formMik.handleChange('email')}
-                        status={formMik.errors.email && 'error'}
-                    />
-                    {formMik.errors.email && (
-                        <Typography.Paragraph>{formMik.errors.email}</Typography.Paragraph>
-                    )}
-                </div> */}
                 <div>
                     <Typography.Paragraph>{'Password'}</Typography.Paragraph>
                     <Input name={'password'}
@@ -56,11 +45,21 @@ const RegisForm = ({ onSubmit } : Props) => {
                         <Typography.Paragraph>{formMik.errors.password}</Typography.Paragraph>
                     )}
                 </div>
+                <div>
+                    <Typography.Paragraph>{'Role'}</Typography.Paragraph>
+                    <Input name={'role'}
+                        value={formMik.values.role} 
+                        onChange={formMik.handleChange('role')}
+                        status={formMik.errors.role && 'error'}
+                    />
+                    {formMik.errors.role && (
+                        <Typography.Paragraph>{formMik.errors.role}</Typography.Paragraph>
+                    )}
+                </div>
                 <Button type={'primary'} htmlType={"submit"}>Submit</Button>
             </form>
         </Card>
     )
-
 }
 
 export default RegisForm
