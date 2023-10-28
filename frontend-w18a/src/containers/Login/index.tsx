@@ -32,3 +32,32 @@ const Login = () => {
 }
 
 export default Login
+// const onSubmit = async (data: LoginFormProps) => {
+//     try {
+//         const fetching = await fetch(`${BASE_URL}/auth/login`, {
+//             //'https://mock-api.arikmpt.com/api/user/login'
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify(data)
+//         }); // ini berhasil
+//         if (fetching.ok) {
+//             const response: LoginResponse2 = await fetching.json();
+//             localStorage.setItem('token', response.data.token);
+//             window.location.replace('/');
+//         } else {
+//             const errorData = await fetching.json(); // You can parse error response here
+//             console.error('Login failed:', errorData);
+//             // fetching.status
+//         }
+//     } catch (error) {
+//         console.error('An error occurred during login:', error);
+//     }
+// };
+
+// const Login = () => {
+//     return (
+//         <LoginForm onSubmit={onSubmit} />
+//     );
+// };
+
+// export default Login;

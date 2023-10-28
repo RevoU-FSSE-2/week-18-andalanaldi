@@ -50,18 +50,31 @@ export interface RegisResponse {
 //     acknowledged: boolean;
 //     insertedId: string;
 // }
+// interface message {
+//     message : string;
+// }
 
 interface token {
     token : string;
 }
 
 export interface LoginResponse2 {
+    message: string;
     data: token;
 }
 
 export const headers = {
     Authorization: `bearer ${localStorage.getItem('token')}`
 }
+
+// export const getAuthHeaders = () => {
+//     const token = localStorage.getItem('token');
+//     return {
+//       Authorization: `bearer ${token}`,
+//       'Content-Type': 'application/json',
+//     };
+//   };
+  
 
 export interface GetCategoryResponse {
     message: string;

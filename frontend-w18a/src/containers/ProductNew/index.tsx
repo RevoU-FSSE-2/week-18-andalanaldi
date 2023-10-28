@@ -3,6 +3,7 @@ import { CategoryForm } from "../../components"
 import { useNavigate, useParams } from "react-router-dom"
 import { useCallback, useEffect, useState } from "react";
 import { headers } from '../../types';
+// import { getAuthHeaders } from '../../types';
 import { BASE_URL } from '../../config/config';
 
 const ProductNew = () => {
@@ -11,7 +12,7 @@ const ProductNew = () => {
     const [category, setCategory] = useState<Category>()
 
     const { id } = useParams();
-
+    
     const token = localStorage.getItem('token');
     console.log("token:", token);
 
@@ -50,10 +51,12 @@ const ProductNew = () => {
             const token = localStorage.getItem('token');
             console.log("token:", token);
 
+            // const authHeaders = getAuthHeaders();
             const fetching = await fetch(`${BASE_URL}/ipo/new`, {
                 method: 'POST',
                 headers: 
                 { 
+                    // ...authHeaders,
                     'Content-Type': 'application/json', 
                     Authorization: `Bearer ${token}`
                     // 'authToken'

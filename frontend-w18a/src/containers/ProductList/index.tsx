@@ -2,7 +2,8 @@ import { ColumnsType } from 'antd/es/table';
 import { useEffect, useState  } from 'react';
 //useRef
 import { ProductList as ProductListComponent } from '../../components'
-import { headers, GetCategoryResponse, Category } from '../../types';
+import { GetCategoryResponse, headers, Category } from '../../types';
+//headers, getAuthHeaders,
 import { Button } from 'antd'
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../config/config';
@@ -13,6 +14,7 @@ const ProductList = () => {
     const navigate = useNavigate();
     
     const getCategoryList = async () => {
+        // const authHeaders = getAuthHeaders();
         const token = localStorage.getItem('token');
         console.log("token:", token);
         try {
